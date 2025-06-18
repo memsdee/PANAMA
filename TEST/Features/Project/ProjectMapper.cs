@@ -13,7 +13,7 @@ namespace PANAMA.Features.Project
                 Category = project.Category,
                 Images = project.Media.Where(p => p.FileType == "img").Select(i => i.FilePath).ToArray(),
                 Time = project.TimeProject.ToString("dd/MM/yyyy"),
-               Video = GetVideoResponse(project),
+                Video = GetVideoResponse(project),
                 Description = project.DescProject
             };
         }

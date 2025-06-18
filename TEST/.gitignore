@@ -25,6 +25,17 @@ appsettings.Production.json
 appsettings.Local.json
 appsettings.Staging.json
 
+# Other common ignores
+*.user
+*.suo
+bin/
+obj/
+.vs/
+
+# Launch Settings
+launchSettings.json
+**/Properties/launchSettings.json
+
 # Organize usings
 dotnet_separate_import_directive_groups = false
 dotnet_sort_system_directives_first = false

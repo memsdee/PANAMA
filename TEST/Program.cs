@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MediatR;
-using PANAMA.Share.Infrastructure;
+using PANAMA.Common.Infrastructure;
 using FluentValidation;
 using System.Reflection;
 using PANAMA.Common.ValidatorMediatR;
@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(c => {
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+        Description = "",
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {
@@ -96,6 +96,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddSingleton(sp =>
     sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<JwtSettings>>().Value);
+
 
 var app = builder.Build();
 

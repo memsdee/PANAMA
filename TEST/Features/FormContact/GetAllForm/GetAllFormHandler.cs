@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PANAMA.Features.FormContact.GetAllForm
 {
-    public class GetAllFormHandler : IRequestHandler<GetAllFormQuery, List<GetAllFormResponse>>
+    public class GetAllFormHandler : IRequestHandler<GetAllFormQuery, List<SendFormResponse>>
     {
         private readonly PanamaContext _dbContext;
 
@@ -14,12 +14,12 @@ namespace PANAMA.Features.FormContact.GetAllForm
             _dbContext = dbContext;
         }
 
-        public async Task<List<GetAllFormResponse>> Handle(GetAllFormQuery request, CancellationToken cancellationToken)
+        public async Task<List<SendFormResponse>> Handle(GetAllFormQuery request, CancellationToken cancellationToken)
         {
             var forms = await _dbContext.FormContacts
-            .Select(form => new GetAllFormResponse
-             {
-              IdForm = form.IdForm,
+            .Select(form => new SendFormResponse
+            {
+              Id = form.IdForm,
               UserName = form.UserName,
               UserEmail = form.UserEmail,
               AreaOfInterest = form.AreaOfInterest,
@@ -32,7 +32,7 @@ namespace PANAMA.Features.FormContact.GetAllForm
             if (!forms.Any())
                     throw new KeyNotFoundException("Không có dữ liệu nào");
 
-                return forms;
+            return forms;
 
         }
     }

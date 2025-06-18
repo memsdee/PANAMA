@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using PANAMA.Models;
-using PANAMA.Share.Infrastructure;
+using PANAMA.Common.Infrastructure;
 
 namespace PANAMA.Features.Authen.Token
 {

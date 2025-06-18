@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using PANAMA.Features.Sponsor.GetSponsor;
 
 namespace PANAMA.Features.Sponsor.AddSponsor
 {
-    public class AddSponsorCommand : IRequest<AddSponsorResponse>
+    public class AddSponsorCommand : IRequest<GetSponsorResponse>
     {
         public string Name { get; set; } = null!;
-        public IFormFile Logo { get; set; } = null!;
+        public string Logo { get; set; } = null!;
     }
 }
