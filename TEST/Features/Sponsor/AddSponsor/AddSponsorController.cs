@@ -18,7 +18,7 @@ namespace PANAMA.Features.Sponsor.AddSponsor
         }
 
         [HttpPost("AddSponsor")]
-        public async Task<IActionResult> DelProject([FromForm] AddSponsorCommand request)
+        public async Task<IActionResult> DelProject([FromBody] AddSponsorCommand request)
         {
             var x = await _mediator.Send(request);
             return Ok(x);
