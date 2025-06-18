@@ -43,7 +43,9 @@ namespace PANAMA.Features.Project.AddProject
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-           return ProjectMapper.MapToResponse(project);
+            project = await _dbContext.Projects.Include(p => p.Media).FirstOrDefaultAsync(p => p.IdProject == project.IdProject, cancellationToken);
+
+            return ProjectMapper.MapToResponse(project);
         }
     }
 }

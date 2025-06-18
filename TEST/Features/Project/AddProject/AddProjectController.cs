@@ -17,7 +17,7 @@ namespace PANAMA.Features.Project.AddProject
         }
 
         [HttpPost("AddProject")]
-        public async Task<IActionResult> AddProject([FromForm] AddProjectCommand request)
+        public async Task<IActionResult> AddProject([FromBody] AddProjectCommand request)
         {
             var x = await _mediator.Send(request);
             return Ok(x);

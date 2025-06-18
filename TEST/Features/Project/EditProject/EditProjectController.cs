@@ -17,7 +17,7 @@ namespace PANAMA.Features.Project.EditProject
         }
 
         [HttpPut("EditProject")]
-        public async Task<IActionResult> EditProject([FromForm] EditProjectCommand request)
+        public async Task<IActionResult> EditProject([FromBody] EditProjectCommand request)
         {
             var x = await _mediator.Send(request);
             return Ok(x);

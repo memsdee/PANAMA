@@ -11,7 +11,7 @@ namespace PANAMA.Features.Project
                 Id = project.IdProject,
                 Title = project.Title,
                 Category = project.Category,
-                Images = project.Media.Where(p => p.FileType == "img").Select(i => i.FilePath).ToArray(),
+                Images = project.Media.Where(p => p.FileType == "image").Select(i => i.FilePath).ToArray(),
                 Time = project.TimeProject.ToString("dd/MM/yyyy"),
                 Video = GetVideoResponse(project),
                 Description = project.DescProject
