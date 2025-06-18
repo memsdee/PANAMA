@@ -1,27 +1,21 @@
 ﻿using MediatR;
-using PANAMA.Common.Service;
+using Microsoft.EntityFrameworkCore;
+using PANAMA.Features.Project.FindProject;
 using PANAMA.Models;
-using static PANAMA.Common.Service.SaveMedia;
-
 namespace PANAMA.Features.Project.AddProject
 {
-    public class AddProjectHandler :IRequestHandler<AddProjectCommand, AddProjectResponse>
+    public class AddProjectHandler :IRequestHandler<AddProjectCommand, FindProjectResponse>
     {
         private readonly PanamaContext _dbContext;
 
 
-        public AddProjectHandler(PanamaContext dbContext, IWebHostEnvironment evn)
+        public AddProjectHandler(PanamaContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<AddProjectResponse> Handle(AddProjectCommand request, CancellationToken cancellationToken)
+        public async Task<FindProjectResponse> Handle(AddProjectCommand request, CancellationToken cancellationToken)
         {
-            var isTitle = _dbContext.Projects.Where(o => o.Title == request.Title);
-            if (isTitle.Any())
-                throw new KeyNotFoundException("Title đã có trong dữ liệu");
-
-            var thumbnailPath = await SaveImg.SaveFile(request.Thumbnail,request.Title,cancellationToken);
 
             var project = new Models.Project
             {
@@ -29,32 +23,27 @@ namespace PANAMA.Features.Project.AddProject
                 Title = request.Title,
                 TimeProject = request.TimeProject,
                 DescProject = request.DescProject,
-                Thumbnail = thumbnailPath,
+                Thumbnail = request.Thumbnail,
             };
 
             _dbContext.Projects.Add(project);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            if (request.Media.Any())
+            foreach (var o in request.Media)
             {
-                var mediaList = new List<MediaInfor>(await SaveMedia.SaveFileMedia(request.Media,request.Title,cancellationToken));
-                foreach (var i in mediaList)
+                string isVideo = o.IsVideo ? "video" : "image";
+                var medium = new Models.Medium
                 {
-                    var medium = new Models.Medium
-                    {
-                        FilePath = i.FilePath,
-                        FileType = i.FileType,
-                        Idproject = project.IdProject
-                    };
-                    _dbContext.Add(medium);
-                   await _dbContext.SaveChangesAsync(cancellationToken);
-                }
+                    FilePath = o.FilePath,
+                    FileType = isVideo,
+                    Idproject = project.IdProject
+                };
+                _dbContext.Media.Add(medium);
             }
 
-            return new AddProjectResponse
-            {
-                Success = true
-            };
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+           return ProjectMapper.MapToResponse(project);
         }
     }
 }

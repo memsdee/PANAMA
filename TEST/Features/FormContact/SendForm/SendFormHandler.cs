@@ -27,8 +27,13 @@ namespace PANAMA.Features.FormContact.SendForm
 
             return new SendFormResponse()
             {
-                Success = true,
-                Id = form.IdForm
+                Id = form.IdForm,
+                UserName = form.UserName,
+                UserEmail = form.UserEmail,
+                AreaOfInterest = form.AreaOfInterest,
+                Content = form.Content,
+                StatusCheck = form.StatusCheck,
+                CreatedAt = form.CreatedAt
             };
         }
 

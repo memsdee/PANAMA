@@ -32,6 +32,11 @@ namespace PANAMA.Common.Middleware
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsJsonAsync(new { Error = ex.Message });
             }
+            catch (InvalidOperationException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status409Conflict;
+                await context.Response.WriteAsJsonAsync(new { Error = ex.Message });
+            }
             catch (BadHttpRequestException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
